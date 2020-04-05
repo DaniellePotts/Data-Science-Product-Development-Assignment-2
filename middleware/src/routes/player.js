@@ -5,12 +5,28 @@ const PlayerController = require('../controllers/playerController').PlayerContro
 const PlayerService = require('../service/playerService').PlayerService;
 const MongoClient = require("../database/mongoClient").MongoClient;
 
-router.get("/createSave/:name", (req, res) => {
+router.post("/createSave/:name", async (req, res) => {
     const playerController = new PlayerController(new PlayerService(new MongoClient()));
 
-    playerController.createSaveFile(req.params.name);
+    await playerController.createSaveFile(req.params.name);
 
-    res.status(200).send({message: "Save file created!!"})
+    res.sendStatus(200);
+})
+
+router.get("/allSaves", async (req, res) => {
+    const playerController = new PlayerController(new PlayerService(new MongoClient()));
+
+    const response = await playerController.getSavedFiles();
+
+    res.status(200).send(JSON.stringify(response))
+})
+
+router.put("/saveFile/:gameId", async (req, res) => {
+    const playerController = new PlayerController(new PlayerService(new MongoClient()));
+
+    await playerController.saveFile(req.params.gameId);
+
+    res.sendStatus(200)
 })
 
 module.exports = router;
