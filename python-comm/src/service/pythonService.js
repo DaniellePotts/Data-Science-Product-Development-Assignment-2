@@ -1,16 +1,16 @@
 const { PythonShell } = require("python-shell");
-
 class PythonService {
-  runScript(requestParams, script) {
+  runScript(scriptPath, script, params) {
     return new Promise((resolve, reject) => {
-    //     console.log(__dirname)
-    //   PythonShell.run("/python/main.py", null, function (err, results) {
-    //       console.log(err)
-    //     if (err) return reject(err);
-    //     return resolve(results);
-    //   });
-    
-    resolve(200)
+      PythonShell.defaultOptions = {
+        scriptPath: scriptPath
+      };
+      PythonShell.run(script, params, function (err, results) {
+        if (err) return reject(err);
+        return resolve(results);
+      });
+    }).catch((err) => {
+      Promise.reject(err);
     });
   }
 }
