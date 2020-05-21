@@ -19,7 +19,19 @@ public class MapUtils : MonoBehaviour
     {
         if (Trigger)
         {
-            for (var i = 0; i < Player.PlayerData.Stores.Count; i++)
+           DisplayOwned();
+        }
+        else
+        {
+            DisplayAllRegions();
+        }
+    }
+
+    public void DisplayOwned()
+    {
+        DestroyMarkers();
+
+         for (var i = 0; i < Player.PlayerData.Stores.Count; i++)
             {
                 var regionExists = Regions.Find(x => x.Name.Equals(Player.PlayerData.Stores[i].Region));
 
@@ -29,16 +41,11 @@ public class MapUtils : MonoBehaviour
                     newMarker.transform.parent = regionExists.transform;
                     newMarker.transform.position = regionExists.transform.position;
                     newMarker.SetActive(true);
+
+                    Markers.Add(newMarker);
                 }
             }
-        }
-        else
-        {
-            Debug.Log("displaying all regions");
-            DisplayAllRegions();
-        }
     }
-
     public void DisplayAllRegions()
     {
         DestroyMarkers();

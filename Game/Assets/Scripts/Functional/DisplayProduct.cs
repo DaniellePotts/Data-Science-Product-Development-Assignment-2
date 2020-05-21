@@ -18,12 +18,6 @@ public class DisplayProduct : MonoBehaviour
 		}
 	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void PopulateList()
 	{
 		PurchaseableProducts.Add(new Product(3, 100, "Technology", "Winter"));

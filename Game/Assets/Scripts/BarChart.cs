@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using CodeMonkey.Utils;
+using TMPro;
 
 public class BarChart : MonoBehaviour
 {
@@ -34,8 +35,6 @@ public class BarChart : MonoBehaviour
        	var valueList = new List<int>();
 		var labels = new List<string>();
 
-		Debug.Log(Player.PlayerData.Products[0].ProductType);
-
         for(var i = 0; i < productTypes.Count; i++)
         {
            var product = Player.PlayerData.Products.FindAll(p => p.ProductType == productTypes[i]);
@@ -51,7 +50,6 @@ public class BarChart : MonoBehaviour
 			}
 		}
 
-		Debug.Log(valueList[0]);
         gameObjectList = new List<GameObject>();
 
 		ShowGraph(valueList, -1, (int _i) => labels[_i], (float _f) => "" + Mathf.RoundToInt(_f));
@@ -66,7 +64,7 @@ public class BarChart : MonoBehaviour
 
 		if (getAxisLabelY == null)
 		{
-			getAxisLabelY = delegate (float _f) { return Mathf.RoundToInt(_f).ToString(); };
+			getAxisLabelY = delegate (float _f) { return (_f).ToString("D2"); };
 		}
 
 		if (maxVisibleValueAmount <= 0)
@@ -119,10 +117,10 @@ public class BarChart : MonoBehaviour
 
 		for (int i = Mathf.Max(valueList.Count - maxVisibleValueAmount, 0); i < valueList.Count; i++)
 		{
-            var xPosition = (xSize + xIndex * xSize) + -46f;
+            var xPosition = (xSize + xIndex * xSize + (i * 14)) + -46f;
 			var yPosition = ((valueList[i] - yMinimum) / (yMaximum - yMinimum)) * graphHeight;
-			var barGameObject = CreateBar(new Vector2(xPosition, yPosition), xSize * 0.9f);
-            barGameObject.transform.localPosition += new Vector3(12.61f, -21.3f);
+			var barGameObject = CreateBar(new Vector2(xPosition, yPosition), xSize);
+            barGameObject.transform.localPosition += new Vector3(14.31f, -21f);
 
             barGameObject.GetComponent<Image>().color = Colors[i];
 
@@ -130,11 +128,13 @@ public class BarChart : MonoBehaviour
 			
 			RectTransform labelX = Instantiate(labelTemplateX);
 			labelX.SetParent(graphContainer);
+			labelX.localScale = new Vector3(1, 1, 1);
 			labelX.gameObject.SetActive(true);
-			labelX.anchoredPosition = new Vector2((xPosition + 5f), -33f);
+			labelX.anchoredPosition = new Vector2((xPosition + 5f), -53.75f);
+			labelX.transform.localPosition = new Vector2(barGameObject.transform.localPosition.x, labelX.transform.localPosition.y);
 
-			labelX.GetComponent<Text>().text = getAxisLabelX(i);
-            labelX.GetComponent<Text>().color = new Color32(0, 0, 0, 255);
+			labelX.GetComponent<TextMeshProUGUI>().text = getAxisLabelX(i);
+            labelX.GetComponent<TextMeshProUGUI>().color = new Color32(0, 0, 0, 255);
 
             gameObjectList.Add(labelX.gameObject);
 
@@ -150,7 +150,7 @@ public class BarChart : MonoBehaviour
 			labelY.gameObject.SetActive(true);
             var labelYOffset = -23f;
 			var normalizedValue = i * 1f / seperatorCount;
-			labelY.anchoredPosition = new Vector2(-35, (normalizedValue * graphHeight) + labelYOffset);
+			labelY.anchoredPosition = new Vector2(-30, (normalizedValue * graphHeight) + labelYOffset);
 			labelY.GetComponent<Text>().text = getAxisLabelY(yMinimum + (normalizedValue * (yMaximum - yMinimum)));
             labelY.GetComponent<Text>().color = new Color32(0, 0, 0, 255);
             gameObjectList.Add(labelY.gameObject);

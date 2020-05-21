@@ -10,8 +10,8 @@ public class WindowGraph : MonoBehaviour
 {
     private RectTransform graphContainer;
     [SerializeField] private Sprite dotSprite;
-	[SerializeField]private RectTransform labelTemplateX;
-	[SerializeField]private RectTransform labelTemplateY;
+	[SerializeField] private RectTransform labelTemplateX;
+	[SerializeField] private RectTransform labelTemplateY;
 	[SerializeField] private RectTransform dashTemplateX;
 	[SerializeField] private RectTransform dashTemplateY;
     [SerializeField] private GameObject ZeroLineMarker;
@@ -234,7 +234,7 @@ public class WindowGraph : MonoBehaviour
             labelY.gameObject.SetActive(true);
             var normalizedValue = i * 1f / seperatorCount;
             labelY.anchoredPosition = new Vector2(-7f, normalizedValue * graphHeight);
-            labelY.transform.localPosition += new Vector3(-15, 0);
+            labelY.transform.localPosition += new Vector3(-17, 0);
             var yLabel = getAxisLabelY(yMinimum + (normalizedValue * (yMaximum - yMinimum)));
             yLabel = yLabel.Contains(".") ? yLabel.Split('.')[0] : yLabel;
 

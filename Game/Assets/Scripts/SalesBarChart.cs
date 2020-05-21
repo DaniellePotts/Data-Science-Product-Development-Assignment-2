@@ -74,7 +74,7 @@ public class SalesBarChart : MonoBehaviour
             maxVisibleValueAmount = valueList.Count;
         }
 
-        var graphHeight = barChartContainer.sizeDelta.y;
+        var graphHeight = barChartContainer.sizeDelta.y * 1.5f;
         var graphWidth = barChartContainer.sizeDelta.x;
 
         float yMaximum = valueList[0];
@@ -111,10 +111,10 @@ public class SalesBarChart : MonoBehaviour
 
         for (var i = Mathf.Max(valueList.Count - maxVisibleValueAmount, 0); i < valueList.Count; i++)
         {
-            var xPosition = (xSize + xIndex * xSize) + -46f;
+            var xPosition = (xSize + xIndex * xSize + (i * 15)) + -46f;
             var yPosition = ((valueList[i] - yMinimum) / (yMaximum - yMinimum)) * graphHeight;
-            var barGameObject = CreateBar(new Vector2(xPosition, yPosition), xSize * 0.9f);
-            barGameObject.transform.localPosition += new Vector3(12.61f, -21.3f);
+            var barGameObject = CreateBar(new Vector2(xPosition, yPosition), xSize * 1.2f);
+            barGameObject.transform.localPosition += new Vector3(17f, -20.3f);
 
             barGameObject.GetComponent<Image>().color = Colors[i];
 
@@ -124,7 +124,8 @@ public class SalesBarChart : MonoBehaviour
             labelX.SetParent(barChartContainer);
             labelX.localScale = new Vector3(1, 1, 1);
             labelX.gameObject.SetActive(true);
-            labelX.anchoredPosition = new Vector2(xPosition + 26, -30f);
+            labelX.anchoredPosition = new Vector2(xPosition + 25, -31f);
+            labelX.transform.localPosition = new Vector2(barGameObject.transform.localPosition.x, labelX.transform.localPosition.y);
 
             labelX.GetComponent<TextMeshProUGUI>().text = getAxisLabelX(i);
             labelX.GetComponent<TextMeshProUGUI>().color = new Color32(0, 0, 0, 255);
