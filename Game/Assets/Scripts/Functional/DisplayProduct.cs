@@ -26,9 +26,9 @@ public class DisplayProduct : MonoBehaviour
 
     void PopulateList()
 	{
-		PurchaseableProducts.Add(new Product("Hat", 3, 100, "Tech"));
-		PurchaseableProducts.Add(new Product("Handwash", 2, 5, "Home"));
-		PurchaseableProducts.Add(new Product("Book", 3, 4, "Home"));
+		PurchaseableProducts.Add(new Product(3, 100, "Technology", "Winter"));
+		PurchaseableProducts.Add(new Product( 2, 5, "Outdoor", "Summer"));
+		PurchaseableProducts.Add(new Product(3, 4, "Sports/Fitness","Winter"));
 	}
 
     void AddCell(Product product)
@@ -37,6 +37,6 @@ public class DisplayProduct : MonoBehaviour
 		temp.transform.parent = gameObject.transform;
 		var pc = temp.GetComponent<ProductCell>();
 
-		pc.ProductName.text = product.Name;
+		pc.ProductName.text = product.ProductType;
 	}
 }

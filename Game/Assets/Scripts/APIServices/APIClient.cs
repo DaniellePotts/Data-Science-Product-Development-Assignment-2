@@ -27,7 +27,6 @@ public class APIClient : MonoBehaviour
 	IEnumerator MakePostRequest(string url, List<string> formData)
 	{
 		WWWForm form = new WWWForm();
-        Debug.Log(url);
         var data = JsonUtils.ToJson<string>(formData.ToArray());
 		form.AddField("data", data);
 
@@ -47,9 +46,6 @@ public class APIClient : MonoBehaviour
 					sb.Append(dict.Key).Append(": \t[").Append(dict.Value).Append("]\n");
 				}
 
-				// Print Headers
-				Debug.Log(sb.ToString());
-
 				var response = new List<APIResponse>();
 				response.Add(new APIResponse(www.downloadHandler.text));
 
@@ -60,7 +56,6 @@ public class APIClient : MonoBehaviour
 
     IEnumerator MakeGetRequest(string url)
     {
-        Debug.Log(url);
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
             yield return www.SendWebRequest();
@@ -76,9 +71,6 @@ public class APIClient : MonoBehaviour
                 {
                     sb.Append(dict.Key).Append(": \t[").Append(dict.Value).Append("]\n");
                 }
-
-                // Print Headers
-                Debug.Log(sb.ToString());
 
                 var response = new List<APIResponse>();
                 response.Add(new APIResponse(www.downloadHandler.text));

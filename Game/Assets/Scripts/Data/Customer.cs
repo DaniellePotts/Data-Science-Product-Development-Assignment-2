@@ -1,4 +1,5 @@
-﻿public class Customer
+﻿[System.Serializable]
+public class Customer
 {
     public int Count;
     public string Season;

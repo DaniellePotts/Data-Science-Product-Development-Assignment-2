@@ -15,7 +15,9 @@ public class Forecast : MonoBehaviour
 	public void CallForecast()
 	{
         var sales = new List<string>();
-        Player.PlayerData.SalesInfo.Sales.ForEach((sale) =>
+        var data = Player.PlayerData.SalesInfo.Sales.Take(100).ToList();       
+
+        data.ForEach((sale) =>
         {
             sales.Add(JsonUtility.ToJson(sale));
         });
@@ -26,7 +28,7 @@ public class Forecast : MonoBehaviour
 
     public void CallForecastSeason(string season)
     {
-        var sales = Player.PlayerData.SalesInfo.Sales.Where(p => p.Season == season).ToList();
+        var sales = Player.PlayerData.SalesInfo.Sales.Where(p => p.Season == season).ToList().Take(100).ToList();       
         var parsedSales = new List<string>();
 
         sales.ForEach((sale) =>
@@ -49,7 +51,7 @@ public class Forecast : MonoBehaviour
 
     public void CallForecastProductType(string productType)
     {
-        var sales = Player.PlayerData.SalesInfo.Sales.Where(p => p.ProductType == productType).ToList().Take(100).ToList();
+        var sales = Player.PlayerData.SalesInfo.Sales.Where(p => p.ProductType == productType).ToList().Take(100).ToList();       
         var parsedSales = new List<string>();
 
         sales.ForEach((sale) =>

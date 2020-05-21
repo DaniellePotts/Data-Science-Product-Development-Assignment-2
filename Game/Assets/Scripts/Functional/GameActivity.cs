@@ -7,19 +7,16 @@ public class GameActivity : MonoBehaviour
 {
 
     [SerializeField] private TextMeshProUGUI totalCustomersLabel;
-    [SerializeField] private TextMeshProUGUI currentSeason;
     [SerializeField] private TextMeshProUGUI bestSellingProduct;
     
     [SerializeField] private GameLogic GameLogic;
     [SerializeField] private Player Player;
 
-    private string CurrentSeason;
 
     private void OnEnable()
     {
         GameLogic.onBehaviourResponse += GameLogic_onBehaviourResponse;
 
-        CurrentSeason = DateUtils.DetermineSeason(Player.PlayerData.CurrentDate);
     }
 
     private void OnDisable()
@@ -34,7 +31,6 @@ public class GameActivity : MonoBehaviour
 
     void setLabels()
     {
-        currentSeason.text = DateUtils.DetermineSeason(Player.PlayerData.CurrentDate);
 
         totalCustomersLabel.text = CalculateCustomers().ToString();
 

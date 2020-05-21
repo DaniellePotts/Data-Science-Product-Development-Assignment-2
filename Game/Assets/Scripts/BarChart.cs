@@ -27,19 +27,34 @@ public class BarChart : MonoBehaviour
 
     private void Awake()
 	{
-		graphContainer = transform.Find("graphContainer").GetComponent<RectTransform>();
+		graphContainer = transform.Find("graphContainerStocks").GetComponent<RectTransform>();
 
-        List<int> valueList = new List<int>() { 22, 44, 55, 66, 88 };
+		var productTypes = new List<string> { "Technology", "Home/Furniture", "Kitchen", "Sports/Fitness", "Outdoor" };
 
+       	var valueList = new List<int>();
+		var labels = new List<string>();
 
-        //for(var i = 0; i < Player.Products.Count; i++)
-        //{
-        //    valueList.Add(Player.Products[i].Quantity);
-        //}
+		Debug.Log(Player.PlayerData.Products[0].ProductType);
 
+        for(var i = 0; i < productTypes.Count; i++)
+        {
+           var product = Player.PlayerData.Products.FindAll(p => p.ProductType == productTypes[i]);
+			if(product != null){
+				var totalQuantity = 0;
+
+				product.ForEach((p)=> {
+					totalQuantity += p.Quantity;
+				});
+
+				valueList.Add(totalQuantity);
+				labels.Add(productTypes[i]);
+			}
+		}
+
+		Debug.Log(valueList[0]);
         gameObjectList = new List<GameObject>();
-		//maxvisamount should be -1 if we want the whole thing
-		ShowGraph(valueList, -1, (int _i) => "Day " + (_i + 1), (float _f) => "$" + Mathf.RoundToInt(_f));
+
+		ShowGraph(valueList, -1, (int _i) => labels[_i], (float _f) => "" + Mathf.RoundToInt(_f));
 	}
 
 	private void ShowGraph(List<int> valueList, int maxVisibleValueAmount = -1, Func<int, string> getAxisLabelX = null, Func<float, string> getAxisLabelY = null)
@@ -116,18 +131,13 @@ public class BarChart : MonoBehaviour
 			RectTransform labelX = Instantiate(labelTemplateX);
 			labelX.SetParent(graphContainer);
 			labelX.gameObject.SetActive(true);
-			labelX.anchoredPosition = new Vector2((xPosition), -33f);
+			labelX.anchoredPosition = new Vector2((xPosition + 5f), -33f);
 
 			labelX.GetComponent<Text>().text = getAxisLabelX(i);
             labelX.GetComponent<Text>().color = new Color32(0, 0, 0, 255);
 
             gameObjectList.Add(labelX.gameObject);
 
-			RectTransform dashX = Instantiate(dashTemplateX);
-			dashX.SetParent(graphContainer);
-			dashX.gameObject.SetActive(true);
-			dashX.anchoredPosition = new Vector2((xPosition), -10f);
-			gameObjectList.Add(dashX.gameObject);
 			xIndex++;
 		}
 
@@ -145,11 +155,7 @@ public class BarChart : MonoBehaviour
             labelY.GetComponent<Text>().color = new Color32(0, 0, 0, 255);
             gameObjectList.Add(labelY.gameObject);
 
-			RectTransform dashY = Instantiate(dashTemplateY);
-			dashY.SetParent(graphContainer);
-			dashY.gameObject.SetActive(true);
-			dashY.anchoredPosition = new Vector2(-4f, normalizedValue * graphHeight);
-			gameObjectList.Add(dashY.gameObject);
+			
 		}
 	}
 

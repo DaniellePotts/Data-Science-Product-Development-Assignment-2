@@ -5,6 +5,8 @@ public class DateDisplay : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI DayMonthYear;
     [SerializeField] private Player Player;
+    [SerializeField] private TextMeshProUGUI CurrentSeason;
+
     public int Seconds;
 
     private int Rounds = 1;
@@ -12,6 +14,7 @@ public class DateDisplay : MonoBehaviour
     void Start()
     {
         UpdateDateText(Player.PlayerData.CurrentDate);
+        UpdateSeason();
     }
 
     void OnEnable()
@@ -36,4 +39,10 @@ public class DateDisplay : MonoBehaviour
         DayMonthYear.text = DateUtils.DateToText(date);
 
     }
+
+    void UpdateSeason()
+    {
+       CurrentSeason.text = DateUtils.DetermineSeason( Player.PlayerData.CurrentDate);
+    }
+
 }

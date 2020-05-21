@@ -65,6 +65,15 @@ public class Player: MonoBehaviour
             date = DateUtils.AddDay(date, 10);
         }
 
+        var seasons= new List<string>(){"Spring","Fall","Summer","Winter"};
+
+        for(var i=0;i<productTypes.Count;i++){
+            var quantity = random.Next(0, 15);
+            var season = seasons[random.Next(0, seasons.Count)];
+
+            PlayerData.Products.Add(new Product(quantity,0,productTypes[i], season));
+        }
+
         PlayerData.SalesInfo = new SalesInfo();
         PlayerData.SalesInfo.Sales = sales;
     }
@@ -94,7 +103,7 @@ public class Player: MonoBehaviour
         }
         else
         {
-            PlayerData.Products.Add(new Product("", quantity, 100, productLine));
+            PlayerData.Products.Add(new Product( quantity, 100, productLine, "Winter"));
         }
     }
 

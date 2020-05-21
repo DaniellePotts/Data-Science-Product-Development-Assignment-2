@@ -27,28 +27,29 @@ public class WindowGraph : MonoBehaviour
 
     public void DisplayProductType(string productType)
     {
+        DestroyGameObjects();
         titleLabel.text = "Product Forecast for Product Type - " + productType;
         forecast.CallForecastProductType(productType);
         forecast.onGetForecast += Forecast_onGetForecast;
         noProductsPopup.SetActive(false);
         ZeroLineMarker.SetActive(false);
-        loadingPopup.SetActive(true);
-        DestroyGameObjects();
+        loadingPopup.SetActive(true);    
     }
 
     public void DisplayBySeason(string season)
     {
+        DestroyGameObjects();
         titleLabel.text = "Product Forecast for Season - " + season; 
         forecast.CallForecastSeason(season);
         forecast.onGetForecast += Forecast_onGetForecast;
         noProductsPopup.SetActive(false);
         ZeroLineMarker.SetActive(false);
         loadingPopup.SetActive(true);
-        DestroyGameObjects();
     }
 
     private void OnEnable()
 	{
+        DestroyGameObjects();
         titleLabel.text = "Product Forecast";
         graphContainer = transform.Find("graphContainer").GetComponent<RectTransform>();
 		forecast.CallForecast();
@@ -121,9 +122,11 @@ public class WindowGraph : MonoBehaviour
 
     private void DestroyGameObjects()
     {
-        foreach (GameObject gameObject in gameObjectList)
-        {
-            Destroy(gameObject);
+        if(gameObjectList != null && gameObjectList.Count > 0){
+            foreach (GameObject gameObject in gameObjectList)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -247,7 +250,7 @@ public class WindowGraph : MonoBehaviour
             {
                 if (cleanedLabel < 0)
                 {
-                    maxNegativeLabelValue = Mathf.Max(maxNegativeLabelValue, cleanedLabel);
+ maxNegativeLabelValue = Mathf.Max(maxNegativeLabelValue, cleanedLabel);
                     zeroLinePosY = labelY.transform.position.y;
 
                     var eventTrigger = ZeroLineMarker.AddComponent<EventTrigger>();
@@ -263,6 +266,8 @@ public class WindowGraph : MonoBehaviour
 
                     exit.callback.AddListener((eventData) => { toolTip.SetActive(false); });
                     eventTrigger.triggers.Add(exit);
+                    
+                   
                 }
             }
            
@@ -273,8 +278,14 @@ public class WindowGraph : MonoBehaviour
 
         if(maxNegativeLabelValue < 0)
         {
-            ZeroLineMarker.transform.position = new Vector3(ZeroLineMarker.transform.position.x, zeroLinePosY + 20f);
-            ZeroLineMarker.SetActive(true);
+            var aboveZero = valueList.FindAll(v => v > 0);
+
+            Debug.Log(aboveZero.Count);
+            if(aboveZero.Count > 0)
+            {
+                ZeroLineMarker.transform.position = new Vector3(ZeroLineMarker.transform.position.x, zeroLinePosY + 20f);
+                ZeroLineMarker.SetActive(true);
+            }
         }
     }
 
