@@ -61,7 +61,7 @@ This should return:
 First, to install all the required Python packages, navigate to:
 
 ```
-src/python 
+python-comm/src/python 
 ```
 
 From here, within a terminal window, run:
