@@ -13,11 +13,17 @@ public class PurchasePopup : MonoBehaviour
     {
         ProductName.text = SelectedProductType.text;
 
-        var product = Player.PlayerData.Products.Find(p => p.ProductType.Equals(SelectedProductType.text));
+        var products = Player.PlayerData.Products.FindAll(p => p.ProductType.Equals(SelectedProductType.text));
 
-        if (product != null)
+        if (products != null)
         {
-            ProductQuantity.text = product.Quantity.ToString();
+            var quantity = 0;
+
+            products.ForEach((product)=>{
+                quantity +=product.Quantity;
+            });
+
+            ProductQuantity.text = quantity.ToString();
         }
     }
     

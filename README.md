@@ -8,10 +8,13 @@ Included in the submission folder is a game guide. I suggest to follow this to u
 
 **Requirements:**
 
+These requirements have been tested on both Mac OSX and Windows operating systems. 
+
+![Python Install screenshot](./README-Images/python_install.png) The file you should select is circled above
 - [NodeJs](https://nodejs.org/en)
     -   Select LTS version. This will then prompt a download .exe/.dmg
     -   During the installation, the installer will request if you would like to install other libraries, which includes Python. **This is not recommended** as it will downloaded other libraries which aren't necessary, however feel free to do so if the other installs suit your needs
-- [Python](https://www.python.org/downloads/release/python-368/) (version >= 3.6)
+- [Python](https://www.python.org/downloads/release/python-368/) (version 3.6.8) Make sure you select the install as seen below
     -   During installation, on Windows, ensure to select *add to path*. This automatically add Python to your environment variables setup. If this is missed, follow this [link](https://superuser.com/questions/143119/how-do-i-add-python-to-the-windows-path) to figure out how to set them manually
 - [Unity](https://store.unity.com/download)
     -   You will first need to install Unity Hub, then Unity
@@ -72,7 +75,7 @@ pip install numpy pandas scikit-learn keras tensorflow
 
 #### NodeJS
 
-Node packages should be included in the system under the *node_modules* folder. If this is not the case, simply run:
+Node packages should be included in the system under the *node_modules* folder. If this is not the case, simply run from within the python-comm folder:
 
 ```
 npm install
@@ -91,4 +94,7 @@ This will start up the API, to verify this, a localhost URL should appear:
 Assignment 2 API listening at http://localhost:3001
 ```
 
+### Unity
+
+To run Unity, from within Unity Hub, select 'Add' and navigate to where the folder titled 'Game' is located. Select this folder. The solution will take a short while to load in.
 

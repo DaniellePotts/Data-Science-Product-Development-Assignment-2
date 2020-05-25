@@ -26,7 +26,7 @@ public class BarChart : MonoBehaviour
             new Color32(185, 66, 245, 255)
         };
 
-    private void Awake()
+    private void OnEnable()
 	{
 		graphContainer = transform.Find("graphContainerStocks").GetComponent<RectTransform>();
 

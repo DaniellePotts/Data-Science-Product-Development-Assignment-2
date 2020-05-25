@@ -91,20 +91,7 @@ public class Player: MonoBehaviour
 
     public void AddProducts(string productLine, int quantity)
     {
-        if (CheckIfProductExists(productLine))
-        {
-            for(var i = 0; i < PlayerData.Products.Count; i++)
-            {
-                if (PlayerData.Products[i].ProductType.Equals(productLine))
-                {
-                    PlayerData.Products[i].Quantity += quantity;
-                }
-            }
-        }
-        else
-        {
-            PlayerData.Products.Add(new Product( quantity, 100, productLine, "Winter"));
-        }
+        PlayerData.Products.Add(new Product( quantity, 100, productLine, "Winter"));   
     }
 
     public void DecreaseQuantity(string productLine, int quantity)

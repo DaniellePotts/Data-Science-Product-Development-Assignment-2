@@ -70,7 +70,7 @@ router.get("/shoppers/:season", async (req, res) => {
     let options = {
       args: [req.params.season, rounds],
     };
-    console.log(options);
+
     await pythonController.runScript(scriptPath, script, options);
 
     const csvToJson = new CsvToJson();
